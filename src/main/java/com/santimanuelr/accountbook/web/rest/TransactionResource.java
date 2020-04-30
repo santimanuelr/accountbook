@@ -2,9 +2,12 @@ package com.santimanuelr.accountbook.web.rest;
 
 import com.santimanuelr.accountbook.domain.Transaction;
 import com.santimanuelr.accountbook.repository.TransactionRepository;
+import com.santimanuelr.accountbook.service.TransactionService;
+import com.santimanuelr.accountbook.web.rest.Exceptions.NegativeBalanceException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +35,9 @@ public class TransactionResource {
     private String applicationName;
 
     private final TransactionRepository transactionRepository;
+    
+    @Autowired
+    private TransactionService transactionService;
 
     public TransactionResource(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
@@ -50,6 +56,14 @@ public class TransactionResource {
         if (transaction.getId() != null) {
         	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A new transaction cannot already have an ID");
         }
+        try {
+			transactionService.customTransactionValidations(transaction);
+			transactionService.refreshBlance(transaction);
+		} catch (NegativeBalanceException e) {
+			throw e;
+		} catch (Exception ex) {
+			log.error("Fail in createTransaction", ex);
+		}
         Transaction result = transactionRepository.save(transaction);
         return ResponseEntity.created(new URI("/api/transactions/" + result.getId()))
             .body(result);
@@ -97,7 +111,7 @@ public class TransactionResource {
         log.debug("REST request to get Transaction : {}", id);
         Optional<Transaction> transaction = transactionRepository.findById(id);
         return transaction.map(response -> ResponseEntity.ok().body(response))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+          .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     /**

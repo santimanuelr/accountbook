@@ -1,5 +1,6 @@
 package com.santimanuelr.accountbook.web.rest;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.santimanuelr.accountbook.domain.Balance;
 import com.santimanuelr.accountbook.domain.UserAccount;
+import com.santimanuelr.accountbook.repository.BalanceRepository;
 import com.santimanuelr.accountbook.repository.UserAccountRepository;
 
 /**
@@ -38,9 +41,12 @@ public class UserAccountResource {
     private String applicationName;
 
     private final UserAccountRepository userAccountRepository;
+    private final BalanceRepository balanceRepository;
 
-    public UserAccountResource(UserAccountRepository userAccountRepository) {
+    public UserAccountResource(UserAccountRepository userAccountRepository, 
+    		BalanceRepository balanceRepository) {
         this.userAccountRepository = userAccountRepository;
+        this.balanceRepository = balanceRepository;
     }
 
     /**
@@ -57,6 +63,13 @@ public class UserAccountResource {
         	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A new userAccount cannot already have an ID");
         }
         UserAccount result = userAccountRepository.save(userAccount);
+        Balance newBalance = new Balance();
+        
+        //For testing we create a balance too. To prevent execute other request
+        newBalance.setAccountId(result.getId());
+        newBalance.setTotal(new BigDecimal(0l));
+        balanceRepository.save(newBalance);
+        
         return ResponseEntity.created(new URI("/api/user-accounts/" + result.getId()))
             .body(result);
     }

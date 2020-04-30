@@ -1,10 +1,11 @@
 package com.santimanuelr.accountbook.repository;
 
-import com.santimanuelr.accountbook.domain.Balance;
+import java.util.List;
 
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
+
+import com.santimanuelr.accountbook.domain.Balance;
 
 /**
  * Spring Data MongoDB repository for the Balance entity.
@@ -12,4 +13,7 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface BalanceRepository extends MongoRepository<Balance, String> {
+
+	List<Balance> findByAccountId(String idUserAccount);
+
 }

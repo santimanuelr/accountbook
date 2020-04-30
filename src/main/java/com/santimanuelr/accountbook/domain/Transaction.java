@@ -20,6 +20,9 @@ public class Transaction implements Serializable {
     @Id
     private String id;
 
+    @Field("id_user_account")
+    private String idUserAccount;
+
     @Field("type")
     private String type;
 
@@ -36,6 +39,19 @@ public class Transaction implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getIdUserAccount() {
+        return idUserAccount;
+    }
+
+    public Transaction idUserAccount(String idUserAccount) {
+        this.idUserAccount = idUserAccount;
+        return this;
+    }
+
+    public void setIdUserAccount(String idUserAccount) {
+        this.idUserAccount = idUserAccount;
     }
 
     public String getType() {
@@ -98,6 +114,7 @@ public class Transaction implements Serializable {
     public String toString() {
         return "Transaction{" +
             "id=" + getId() +
+            ", idUserAccount='" + getIdUserAccount() + "'" +
             ", type='" + getType() + "'" +
             ", amount=" + getAmount() +
             ", effectiveDate='" + getEffectiveDate() + "'" +
