@@ -1,0 +1,16 @@
+com/santimanuelr/accountbook/web/rest/UserAccountResource.class
+com/santimanuelr/accountbook/repository/UserAccountRepository.class
+com/santimanuelr/accountbook/repository/TransactionRepository.class
+com/santimanuelr/accountbook/service/TransactionService.class
+com/santimanuelr/accountbook/domain/UserAccount.class
+com/santimanuelr/accountbook/domain/PersistentAuditEvent.class
+com/santimanuelr/accountbook/config/SwaggerConfiguration.class
+com/santimanuelr/accountbook/web/rest/TransactionResource.class
+com/santimanuelr/accountbook/AccountbookApplication.class
+com/santimanuelr/accountbook/repository/BalanceRepository.class
+com/santimanuelr/accountbook/domain/Balance.class
+com/santimanuelr/accountbook/domain/Transaction.class
+com/santimanuelr/accountbook/config/WebConfig.class
+com/santimanuelr/accountbook/web/rest/BalanceResource.class
+com/santimanuelr/accountbook/domain/AbstractAuditingEntity.class
+com/santimanuelr/accountbook/web/rest/Exceptions/NegativeBalanceException.class
