@@ -7,6 +7,8 @@ To run locally you have to have maven and docker in your machine
 
 `./run.sh`
 
+You can find requests to test the project under docs folder
+
 
 ## Requirements
 We are looking to build a money accounting system. The application should be a web service. It should not do any real “transactional” work, just emulate the financial transactions logic (debit and credit).
@@ -28,3 +30,8 @@ It is necessary to design REST API by your vision in the scope of this task. The
 In general, the service will be used programmatically via its RESTful API. For testing purposes Postman or any similar app can be used.
 It should be possible to launch project/projects by a single-line-command. Please provide README.md
 Target completion time is 3 hours. We would rather see what you were able to do in 3 hours than a full-blown application you’ve spent days implementing. Note that in addition to quality, time used is also factored into scoring the task.
+
+
+## Domain
+
+![Image of domain](https://github.com/santimanuelr/accountbook/blob/master/docs/jhipster-jdl.png)
